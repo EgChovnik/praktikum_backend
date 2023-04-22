@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="CSS/main.css">
+  </head>
+  <body>
+    <h2>Калькулятор длинной арифметики</h2><hr>
+    <noscript>Подключите JavaScript</noscript>
+    <script src="./main.js"></script>
+    <header>
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</div><br>
+    </header>
+    <main>
+      Число X
+      <form action="/count"
+            method="post"
+            id ="myform">
+        <input type="text" name="num1" value="0" /><br>
+        Число Y <br>
+        <input type="text" name="num2" value="0" /><br>
+        Выберите операцию <br>
+        <select name="oper" value="asd">
+          <option selected>X+Y</option>
+          <option>X-Y</option>
+          <option>X*Y</option>
+          <option>X/Y</option>
+        </select><br><br>
+        <button type="submit" name="butt1">Вычислить</button>
+      </form>
+    </main>
+
+    <footer><br>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    </footer>
+
+  </body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="CSS/main.css">
+  </head>
+  <body>
+    <h2>Калькулятор длинной арифметики</h2><hr>
+    <header>
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</div><br>
+    </header>
+
+    <main>
+      <form id="form">
+            <label>
+              Число X
+              <textarea name="num1"
+                        id ="num1"
+                        rows="5"
+                        cols="80"
+                        placeholder="Type number X"
+                        maxlength="5000"
+                        required>
+              </textarea><br>
+            </label>
+            <label>
+              Число Y
+              <textarea name="num2"
+                        id ="num2"
+                        rows="5"
+                        cols="80"
+                        placeholder="Type number X"
+                        maxlength="5000"
+                        required>
+              </textarea><br>
+            </label>
+            <label>
+              Выберите операцию:
+              <select name="oper">
+                <option selected disabled>X?Y</option>
+                <option>X+Y</option>
+                <option>X-Y</option>
+                <option>X*Y</option>
+                <option>X/Y</option>
+              </select><br><br>
+              <button type="submit">Вычислить</button>
+            </label>
+      </form>
+      <textarea name="num3"
+                id ="num3"
+                rows="5"
+                cols="80"
+                placeholder="Result"
+                maxlength="5000">
+      </textarea><br>
+    </main>
+
+    <footer><br>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+      ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    </footer>
+  <script>
+    const form = document.getElementById('form')
+
+    function retrieveFormValue(event) {
+      
+        num1 = form.querySelector('[name="num1"]'),
+        num2 = form.querySelector('[name="num2"]'),
+        oper = form.querySelector('[name="oper"]');
+
+        values = {
+            num1: num1.value,
+            num2: num2.value,
+            oper: oper.value
+        };
+        
+        fetch('/count', { // указываем конечную точку или URL-адрес сервера
+            headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            }),
+            method: 'POST', // метод запроса на сервер
+            body: JSON.stringify({"num1": values["num1"], "num2": values["num2"], "oper": values["oper"]}) // передаем данные из формы
+        })
+        .then(response => response.json())
+        .then(response => {
+            num3.value = response.message;
+            console.log('Response', response);
+        })
+        .catch(error => {
+            // Обработка ошибок при отправке запроса на сервер
+            console.error(error);
+        });
+
+    }
+
+    form.addEventListener('submit', retrieveFormValue);
+  </script>
+  </body>
+</html>

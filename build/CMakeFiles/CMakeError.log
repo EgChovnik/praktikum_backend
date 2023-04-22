@@ -1,0 +1,17 @@
+Determining if the include file coroutine exists failed with the following output:
+Change Dir: /home/egor/praktikum_backend/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a4a1c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a4a1c.dir/build.make CMakeFiles/cmTC_a4a1c.dir/build
+gmake[1]: Entering directory '/home/egor/praktikum_backend/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a4a1c.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_a4a1c.dir/CheckIncludeFile.cxx.o -c /home/egor/praktikum_backend/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+In file included from /home/egor/praktikum_backend/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:
+/usr/include/c++/12/coroutine:361:2: error: #error "the coroutine header requires -fcoroutines"
+  361 | #error "the coroutine header requires -fcoroutines"
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_a4a1c.dir/build.make:78: CMakeFiles/cmTC_a4a1c.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/egor/praktikum_backend/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a4a1c/fast] Error 2
+
+
+
