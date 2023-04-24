@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <drogon/drogon.h>
+#include <count.h>
 
 using namespace drogon;
 
@@ -39,7 +40,7 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
     auto num1 = requestBody->get("num1", "guest").asString();
     auto num2 = requestBody->get("num2", "guest").asString();
     auto oper = requestBody->get("oper", "guest").asString();
-
+    
     jsonBody["message"] = "Kakoi nahui oper, hui musoram!!";
 
     auto response = HttpResponse::newHttpJsonResponse(jsonBody);

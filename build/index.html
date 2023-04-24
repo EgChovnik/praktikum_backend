@@ -71,7 +71,7 @@
                         cols="80"
                         placeholder="Type number X"
                         maxlength="5000"
-                        required>
+                        >
               </textarea><br>
             </label>
             <label>
@@ -82,7 +82,7 @@
                         cols="80"
                         placeholder="Type number X"
                         maxlength="5000"
-                        required>
+                        >
               </textarea><br>
             </label>
             <label>
@@ -136,7 +136,7 @@
         })
         .then(response => response.json())
         .then(response => {
-            num3.value = response.message;
+            num3.value = response;
             console.log('Response', response);
         })
         .catch(error => {
