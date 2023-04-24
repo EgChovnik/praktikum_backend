@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/praktikum_backend.dir/main.cc.o -o praktikum_backend  /usr/local/lib/libdrogon.a /usr/local/lib/libtrantor.a /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so -lpthread -ldl /usr/lib/x86_64-linux-gnu/libjsoncpp.so /usr/lib/x86_64-linux-gnu/libuuid.so /usr/lib/x86_64-linux-gnu/libz.so 

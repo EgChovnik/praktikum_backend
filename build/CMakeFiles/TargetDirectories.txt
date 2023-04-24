@@ -1,6 +1,0 @@
-/home/egor/praktikum_backend/build/CMakeFiles/praktikum_backend.dir
-/home/egor/praktikum_backend/build/CMakeFiles/edit_cache.dir
-/home/egor/praktikum_backend/build/CMakeFiles/rebuild_cache.dir
-/home/egor/praktikum_backend/build/test/CMakeFiles/praktikum_backend_test.dir
-/home/egor/praktikum_backend/build/test/CMakeFiles/edit_cache.dir
-/home/egor/praktikum_backend/build/test/CMakeFiles/rebuild_cache.dir
