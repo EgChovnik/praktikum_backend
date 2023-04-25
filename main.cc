@@ -36,12 +36,26 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
 		std::cout << "requestBody is null!!\n";
 		return;
 	}
-
 	auto num1 = requestBody->get("num1", "guest").asString();
-	auto num2 = requestBody->get("num2", "guest").asString();
+    auto num2 = requestBody->get("num2", "guest").asString();
 	auto oper = requestBody->get("oper", "guest").asString();
-
-	jsonBody["message"] = "Kakoi nahui oper, hui musoram!!";
+	
+    auto X = BigInteger(num1);
+    auto Y = BigInteger(num2);
+    
+    string RES = "";
+    if (oper == "+") {
+        RES = (X + Y).toString();
+    } else if (oper == "-") {
+        RES = (X - Y).toString();
+    } else if (oper == "*") {
+        RES = (X * Y).toString();
+    } else if (oper == "/") {
+        RES = (X / Y).toString();
+    } else {
+        RES = "wtf... -_-";
+    }
+    jsonBody["message"] = RES;
 
 	auto response = HttpResponse::newHttpJsonResponse(jsonBody);
 	callback(response);

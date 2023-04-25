@@ -1,0 +1,7 @@
+DIR="${HOME}/praktikum_backend/build"
+CUR_DIR=pwd
+
+cd ${DIR}
+
+npm run build && cmake .. && make && ./praktikum_backend
+
