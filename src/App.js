@@ -1,14 +1,17 @@
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
 function App() {
     return (
         <div className="App">
-            <Form />
+            <MyForm />
         </div>
     );
 }
 
 function onSubmit(e, num1, num2, oper, setResp) {
+    console.log(num1);
     e.preventDefault();
     fetch("/count", {
         headers: new Headers({
@@ -27,39 +30,54 @@ function onSubmit(e, num1, num2, oper, setResp) {
         .catch((error) => console.error(error));
 }
 
-function Form() {
+function MyForm() {
     const [resp, setResp] = useState("");
     const [num1, setNum1] = useState("0");
     const [num2, setNum2] = useState("0");
     const [oper, setOper] = useState("+");
     return (
         <>
-            <form onSubmit={(e) => onSubmit(e, num1, num2, oper, setResp)}>
-                <label>Введите первое число: </label>
-                <textarea
-                    value={num1}
-                    maxlength="1000"
-                    onChange={(e) => setNum1(e.target.value)}
-                />
-                <br />
-                <label>Введите второе число: </label>
-                <textarea
-                    value={num2}
-                    maxlength="1000"
-                    onChange={(e) => setNum2(e.target.value)}
-                />
-                <br />
-                <label>Выберите операцию: </label>
-                <select value={oper} onChange={(e) => setOper(e.target.value)}>
-                    <option selected>+</option>
-                    <option>-</option>
-                    <option>*</option>
-                    <option>/</option>
-                </select>
-                <br />
-                <button>Вычислить</button>
-            </form>
-            {resp != "" && <p>Результат вычисления: {resp}</p>}
+            <Form onSubmit={(e) => onSubmit(e, num1, num2, oper, setResp)}>
+                <Form.Group>
+                    <Form.Label>Введите первое число: </Form.Label>
+                    <Form.Control
+                        defaultValue={num1}
+                        maxlength="617"
+                        onChange={(e) => setNum1(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Введите второе число: </Form.Label>
+                    <Form.Control
+                        defaultValue={num2}
+                        maxlength="617"
+                        onChange={(e) => setNum2(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Выберите операцию: </Form.Label>
+                    <Form.Select
+                        value={oper}
+                        onChange={(e) => setOper(e.target.value)}
+                    >
+                        <option selected>+</option>
+                        <option>-</option>
+                        <option>*</option>
+                        <option>/</option>
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group>
+                    <Button variant="primary" type="submit">
+                        Вычислить
+                    </Button>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Text className="text-muted">
+                        Примечание: числа должны иметь не больше 617-ти разрядов
+                    </Form.Text>
+                </Form.Group>
+            </Form>
+            {resp !== "" && <p>Результат вычисления: {resp}</p>}
         </>
     );
 }

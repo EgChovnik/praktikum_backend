@@ -1,6 +1,11 @@
 DIR="${HOME}/praktikum_backend/build"
 CUR_DIR=pwd
 
+if [ ! -d ${DIR} ]
+then
+    mkdir -p ${DIR}
+fi
+
 cd ${DIR}
 
 npm run build && cmake .. && make && ./praktikum_backend
