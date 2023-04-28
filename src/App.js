@@ -37,22 +37,44 @@ function MyForm() {
 	const [num2, setNum2] = useState("0");
 	const [oper, setOper] = useState("+");
 	return (
-		<div className="Main">
+		<>
 			<Form onSubmit={(e) => onSubmit(e, num1, num2, oper, setResp)}>
 				<Form.Group>
 					<Form.Label>Введите первое число: </Form.Label>
 					<Form.Control
+						as="textarea"
+						rows={1}
 						defaultValue={num1}
 						maxlength="617"
-						onChange={(e) => setNum1(e.target.value)}
+						onChange={(e) => {
+							const invalidChars = /[^0-9]/gi;
+							if (invalidChars.test(e.target.value)) {
+								e.target.value = e.target.value.replace(
+									invalidChars,
+									""
+								);
+							}
+							setNum1(e.target.value);
+						}}
 					/>
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>Введите второе число: </Form.Label>
 					<Form.Control
+						as="textarea"
+						rows={1}
 						defaultValue={num2}
 						maxlength="617"
-						onChange={(e) => setNum2(e.target.value)}
+						onChange={(e) => {
+							const invalidChars = /[^0-9]/gi;
+							if (invalidChars.test(e.target.value)) {
+								e.target.value = e.target.value.replace(
+									invalidChars,
+									""
+								);
+							}
+							setNum2(e.target.value);
+						}}
 					/>
 				</Form.Group>
 				<Form.Group>
@@ -79,7 +101,7 @@ function MyForm() {
 				</Form.Group>
 			</Form>
 			{resp !== "" && <p>Результат вычисления: {resp}</p>}
-		</div>
+		</>
 	);
 }
 
