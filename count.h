@@ -347,6 +347,11 @@ BigInteger &BigInteger::operator/=(const BigInteger &other) {
 
 BigInteger &BigInteger::operator%=(const BigInteger &other) {
     BigInteger result = *this - (*this / other) * other;
+    // My code starts
+    if (result.sign == -1) {
+        result += other;
+    }
+    // My code ends
     Swap(result);
     return *this;
 }

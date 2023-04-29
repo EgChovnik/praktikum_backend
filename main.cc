@@ -19,39 +19,42 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
 		response->setStatusCode(HttpStatusCode::k400BadRequest);
 
 		callback(response);
-		std::cout << "requestBody is null!!\n";
+		std::cout << "requestBody err: requestBody is null!\n";
 		return;
 	}
 
 	if (!requestBody->isMember("num1") ||
 		!requestBody->isMember("num2") ||
+		!requestBody->isMember("mod") ||
 		!requestBody->isMember("oper")) {
 		jsonBody["status"] = "error";
-		jsonBody["message"] = "num1 num2 and oper fields are required";
+		jsonBody["message"] = "num1, num2, mod and oper fields are required";
 
 		auto response = HttpResponse::newHttpJsonResponse(jsonBody);
 		response->setStatusCode(HttpStatusCode::k400BadRequest);
 
 		callback(response);
-		std::cout << "requestBody is null!!\n";
+		std::cout << "requestBody err: num1, num2, mod and oper fields are required!\n";
 		return;
 	}
 	auto num1 = requestBody->get("num1", "guest").asString();
     auto num2 = requestBody->get("num2", "guest").asString();
+    auto mod = requestBody->get("mod", "guest").asString();
 	auto oper = requestBody->get("oper", "guest").asString();
 	
     auto X = BigInteger(num1);
     auto Y = BigInteger(num2);
+    auto Mod = BigInteger(mod);
     
     string RES = "";
     if (oper == "+") {
-        RES = (X + Y).toString();
+        RES = ((X + Y) % Mod).toString();
     } else if (oper == "-") {
-        RES = (X - Y).toString();
+        RES = ((X - Y) % Mod).toString();
     } else if (oper == "*") {
-        RES = (X * Y).toString();
+        RES = ((X * Y) % Mod).toString();
     } else if (oper == "/") {
-        RES = (X / Y).toString();
+        RES = ((X / Y) % Mod).toString();
     } else {
         RES = "wtf... -_-";
     }
