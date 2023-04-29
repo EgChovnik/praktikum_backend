@@ -42,6 +42,7 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
     auto mod = requestBody->get("mod", "guest").asString();
 	auto oper = requestBody->get("oper", "guest").asString();
 	
+	//TODO Validation (error handler is needed [/ by zero, Mod == 0] )
     auto X = BigInteger(num1);
     auto Y = BigInteger(num2);
     auto Mod = BigInteger(mod);
