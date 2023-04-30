@@ -56,7 +56,9 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
         RES = ((X * Y) % Mod).toString();
     } else if (oper == "/") {
         RES = ((X / Y) % Mod).toString();
-    } else {
+	} else if (oper == "^") {
+		RES = binpow(X % Mod, Y, Mod).toString();
+	} else {
         RES = "wtf... -_-";
     }
     jsonBody["message"] = RES;

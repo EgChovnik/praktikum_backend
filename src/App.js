@@ -2,7 +2,8 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
 import MathJax from "better-react-mathjax/MathJax";
-import { useState } from "react";
+import { format } from "date-fns";
+import { useState, useRef } from "react";
 import "./App.css";
 
 function App() {
@@ -13,25 +14,12 @@ function App() {
 	);
 }
 
-function onSubmit(e, num1, num2, mod, oper, setResp) {
-	console.log(num1);
-	e.preventDefault();
-	fetch("/count", {
-		headers: new Headers({
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		}),
-		method: "POST",
-		body: JSON.stringify({
-			num1: num1,
-			num2: num2,
-			mod: mod,
-			oper: oper,
-		}),
-	})
-		.then((resp) => resp.json())
-		.then((resp) => setResp(resp["message"]))
-		.catch((error) => console.error(error));
+function maxString() {
+	let res = "";
+	for (let i = 0; i < 617; i++) {
+		res += "9";
+	}
+	return res;
 }
 
 function MyForm() {
@@ -40,14 +28,39 @@ function MyForm() {
 	const [num2, setNum2] = useState("0");
 	const [mod, setMod] = useState("1");
 	const [oper, setOper] = useState("+");
+	const ref1 = useRef(null);
+	const ref2 = useRef(null);
+	const ref3 = useRef(null);
+
+	function onSubmit(e) {
+		e.preventDefault();
+		fetch("/count", {
+			headers: new Headers({
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			}),
+			method: "POST",
+			body: JSON.stringify({
+				num1: num1,
+				num2: num2,
+				mod: mod,
+				oper: oper,
+			}),
+		})
+			.then((resp) => resp.json())
+			.then((resp) => setResp(resp["message"]))
+			.catch((error) => console.error(error));
+	}
+
 	return (
 		<>
-			<Form onSubmit={(e) => onSubmit(e, num1, num2, mod, oper, setResp)}>
+			<Form onSubmit={(e) => onSubmit(e)}>
 				<Form.Group>
 					<Form.Label>
 						Число <MathJax inline="true">{"\\(x\\)"}</MathJax>:
 					</Form.Label>
 					<Form.Control
+						ref={ref1}
 						as="textarea"
 						rows={1}
 						defaultValue={num1}
@@ -64,12 +77,22 @@ function MyForm() {
 							setNum1(e.target.value);
 						}}
 					/>
+					<Button
+						variant="outline-dark"
+						onClick={(e) => {
+							ref1.current.value = maxString();
+							setNum1(ref1.current.value);
+						}}
+					>
+						max
+					</Button>
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>
 						Число <MathJax inline="true">{"\\(y\\)"}</MathJax>:
 					</Form.Label>
 					<Form.Control
+						ref={ref2}
 						as="textarea"
 						rows={1}
 						defaultValue={num2}
@@ -86,12 +109,22 @@ function MyForm() {
 							setNum2(e.target.value);
 						}}
 					/>
+					<Button
+						variant="outline-dark"
+						onClick={(e) => {
+							ref2.current.value = maxString();
+							setNum2(ref2.current.value);
+						}}
+					>
+						max
+					</Button>
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>
 						Модуль <MathJax inline="true">{"\\(m\\)"}</MathJax>:
 					</Form.Label>
 					<Form.Control
+						ref={ref3}
 						as="textarea"
 						rows={1}
 						defaultValue={mod}
@@ -108,6 +141,15 @@ function MyForm() {
 							setMod(e.target.value);
 						}}
 					/>
+					<Button
+						variant="outline-dark"
+						onClick={(e) => {
+							ref3.current.value = maxString();
+							setMod(ref3.current.value);
+						}}
+					>
+						max
+					</Button>
 				</Form.Group>
 				<Form.Group>
 					<Form.Text>
@@ -153,10 +195,27 @@ function MyForm() {
 						>
 							<MathJax>{"\\((x/y)\\%m\\)"}</MathJax>
 						</Button>
+						<Button
+							variant="outline-dark"
+							onClick={(e) => {
+								setOper("^");
+							}}
+							type="submit"
+						>
+							<MathJax>{"\\((x^y)\\%m\\)"}</MathJax>
+						</Button>
 					</ButtonGroup>
 				</Form.Group>
 			</Form>
-			{resp !== "" && <p>Результат вычисления: {resp}</p>}
+			{resp !== "" && (
+				<p>
+					Результат вычисления
+					<Form.Text> ({format(Date.now(), "H:mm:ssa")})</Form.Text>
+					:
+					<br />
+					{resp}
+				</p>
+			)}
 		</>
 	);
 }
