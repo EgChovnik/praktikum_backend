@@ -204,6 +204,24 @@ function MyForm() {
 						>
 							<MathJax>{"\\((x^y)\\%m\\)"}</MathJax>
 						</Button>
+						<Button
+							variant="outline-dark"
+							onClick={(e) => {
+								setOper("f");
+							}}
+							type="submit"
+						>
+							<MathJax>{"\\(factor(x)\\)"}</MathJax>
+						</Button>
+						<Button
+							variant="outline-dark"
+							onClick={(e) => {
+								setOper("phi");
+							}}
+							type="submit"
+						>
+							<MathJax>{"\\(\\phi(x)\\)"}</MathJax>
+						</Button>
 					</ButtonGroup>
 				</Form.Group>
 			</Form>

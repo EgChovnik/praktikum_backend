@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <pstream.h>
+#include <map>
 
 using namespace std;
 
@@ -375,3 +377,56 @@ BigInteger binpow(const BigInteger &first, const BigInteger &other, const BigInt
 	return (cur * cur) % mod;
 }
 
+string factor(const BigInteger &first) {
+	const string executable = "$HOME/praktikum_backend/msieve -q " + first.toString();
+	
+	redi::ipstream proc(executable, redi::pstreams::pstdout | redi::pstreams::pstderr);
+	string line, res = "";
+	while (getline(proc.out(), line)) {
+		if (line[0] == 'p') {
+			bool flag = false;
+			string cur = "";
+			for (int i = 0; i < line.size(); ++i) {
+				if (flag) {
+					cur += line[i];
+				}
+				if (line[i] == ' ') {
+					flag = true;
+				}
+			}
+			res += cur + "   ";
+		}
+	}
+	if (proc.eof() && proc.fail()) {
+		proc.clear();
+	}
+	while (std::getline(proc.err(), line)) {
+		cout << line << '\n';
+	}
+
+	return res;
+}
+
+BigInteger phi(const BigInteger &first) {
+	string factr = factor(first);
+	map<string, int> mp;
+	string cur = "";
+	for (auto x : factr) {
+		if (x == ' ') {
+			++mp[cur];
+			cur = "";
+		} else {
+			cur += x;
+		}
+	}
+	++mp[cur];
+	BigInteger res(first);
+	for (auto pr : mp) {
+		if (pr.first[0] == ' ' || pr.first == "") {
+			continue;
+		}
+		BigInteger cur(pr.first);
+		res = (res - (res / cur));
+	}
+	return res;
+}

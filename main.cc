@@ -58,6 +58,10 @@ void myHandler(const HttpRequestPtr &request, Callback &&callback) {
         RES = ((X / Y) % Mod).toString();
 	} else if (oper == "^") {
 		RES = binpow(X % Mod, Y, Mod).toString();
+	} else if (oper == "f") {
+		RES = factor(X);
+	} else if (oper == "phi") {
+		RES = phi(X).toString();
 	} else {
         RES = "wtf... -_-";
     }
