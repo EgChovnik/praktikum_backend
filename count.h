@@ -430,3 +430,34 @@ BigInteger phi(const BigInteger &first) {
 	}
 	return res;
 }
+
+int inv(int a, int b, int & x, int & y) {
+	if (a == 0) {
+		x = 0; y = 1;
+		return b;
+	}
+	int x1, y1;
+	int d = inv(b%a, a, x1, y1);
+	x = y1 - (b / a) * x1;
+	y = x1;
+	return d;
+}
+
+BigInteger find_inv(const BigInteger &first, const BigInteger &other) {
+	int a = stoi(first.toString()), m = stoi(other.toString()), x, y;
+	int g = inv(a, m, x, y);
+	if (g != 1)
+		return BigInteger(-500);
+	else {
+		x = (x % m + m) % m;
+		return BigInteger(x);
+	}
+}
+
+BigInteger div(const BigInteger &first, const BigInteger &other, const BigInteger &mod) {
+	BigInteger invMod = find_inv(other, mod);
+	return first * invMod;
+}
+
+
+
